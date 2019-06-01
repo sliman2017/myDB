@@ -63,4 +63,4 @@ create table if not exists Absence_Enseignant(idEnseignant int, idSeance int, id
 create table if not exists Matiere_Niveau(idMatiere int, idNiveau int, constraint Matiere_M_Niveau_fk foreign key(idMatiere) references Matiere(idMatiere)
                                           on delete cascade on update cascade, constraint Niveau_Matiere_N_fk foreign key(idNiveau) references Niveau(idNiveau)
                                           on delete cascade on update cascade);
-
+/*COMMENTAIRE*/
