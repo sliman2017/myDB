@@ -4,7 +4,7 @@ use GestionDeScolarite;
 
 create table if not exists Person(idPerson int primary key auto_increment, nom varchar(25) not null, 
                     prenom varchar(25) not null, adress varchar(25), dateDeNaissance date not null,
-                    lieuDeNaissance varchar(25), email varchar(25), numPhone varchar(25), sex bool);
+                    lieuDeNaissance varchar(25), email varchar(25), numPhone varchar(25), sex bool, longBlob photos);
 create table if not exists Directeur(idDirecteur int primary key, username varchar(25), uPassword varchar(25),
                        constraint Person_Directeur_fk foreign key(idDirecteur) references Person(idPerson)
                        on delete cascade on update cascade);
