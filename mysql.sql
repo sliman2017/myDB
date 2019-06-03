@@ -63,4 +63,12 @@ create table if not exists Absence_Enseignant(idEnseignant int, idSeance int, id
 create table if not exists Matiere_Niveau(idMatiere int, idNiveau int, constraint Matiere_M_Niveau_fk foreign key(idMatiere) references Matiere(idMatiere)
                                           on delete cascade on update cascade, constraint Niveau_Matiere_N_fk foreign key(idNiveau) references Niveau(idNiveau)
                                           on delete cascade on update cascade);
+<<<<<<< HEAD
 /*ehllo wrold*/
+||||||| merged common ancestors
+
+=======
+/*this comment its came from the github remote myDB */
+/*and this is the seconde commit from github remote myDB*/
+
+>>>>>>> e55c4d43dbe5261dddc234e787439788b774c221
