@@ -24,14 +24,15 @@ add constraint Matiere_Enseignant_fk foreign key(idMatiere)
 create table if not exists Classe(idClasse int primary key auto_increment, Classe varchar(25), salle varchar(25), nbEleve smallint,
                     idEnseignantResponsable int, constraint Enseignant_Classe_fk foreign key(idEnseignantResponsable) 
                     references Enseignant(idEnseignant) on delete cascade on update cascade);
-
+alter table Classe 
+add column idAnnee int, 
+add constraint Annee_Classe_fk foreign key(idAnnee) references Annee(idAnnee) on delete cascade on update cascade,
+drop 
 create table if not exists Enseignant_Classe(idEnseignant int, idClasse int, constraint Enseignant_E_Classe_fk foreign key(idEnseignant)
                                references Enseignant(idEnseignant) on delete cascade on update cascade, 
                                constraint Classe_Enseignant_C_fk foreign key(idClasse)
                                references Classe(idClasse) on update cascade on delete cascade, primary key(idEnseignant, idClasse));
-alter table Enseignant_Classe
-add column idAnnee int,
-add constraint Annee_Enseignant_Classe_fk foreign key(idAnnee) references Annee(idAnnee) on delete cascade on update cascade;
+
 create table if not exists Eleve(idEleve int primary key, moyenneGeneral DECIMAL(4,2), idClasse int, parentPhone varchar(25),
                    constraint Person_Eleve_fk foreign key(idEleve) references Person(idPerson) on delete cascade on update cascade,
                    constraint Classe_Eleve_fk foreign key(idClasse) references Classe(idClasse)on delete cascade on update cascade);
