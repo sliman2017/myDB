@@ -26,8 +26,7 @@ create table if not exists Classe(idClasse int primary key auto_increment, Class
                     references Enseignant(idEnseignant) on delete cascade on update cascade);
 alter table Classe 
 add column idAnnee int, 
-add constraint Annee_Classe_fk foreign key(idAnnee) references Annee(idAnnee) on delete cascade on update cascade,
-drop 
+add constraint Annee_Classe_fk foreign key(idAnnee) references Annee(idAnnee) on delete cascade on update cascade;
 create table if not exists Enseignant_Classe(idEnseignant int, idClasse int, constraint Enseignant_E_Classe_fk foreign key(idEnseignant)
                                references Enseignant(idEnseignant) on delete cascade on update cascade, 
                                constraint Classe_Enseignant_C_fk foreign key(idClasse)
@@ -73,4 +72,35 @@ create table if not exists Absence_Enseignant(idEnseignant int, idSeance int, id
 create table if not exists Matiere_Niveau(idMatiere int, idNiveau int, constraint Matiere_M_Niveau_fk foreign key(idMatiere) references Matiere(idMatiere)
                                           on delete cascade on update cascade, constraint Niveau_Matiere_N_fk foreign key(idNiveau) references Niveau(idNiveau)
                                           on delete cascade on update cascade);
-/*merge conflict*/
+/*this few line to add all the field of the classe table into the Eleve_Ni_An and delete classe table 
+  and rename the Eleve_Ni_An to Classe;*/
+alter table Eleve_Ni_An
+add column classeNb smallint, 
+add salle varchar(25), 
+add nbEleve smallint, 
+add idEnseignantResponsable int, 
+add constraint Enseignant_Eleve_Ni_An_fk foreign key(idEnseignantResponsable) references Enseignant(idEnseignant) on delete cascade on update cascade;
+  
+alter table Eleve_Ni_An
+drop foreign key Classe_Enac_fk ; 
+
+alter table Eleve_Ni_An 
+modify column idClasse int auto_increment not null, 
+add primary key(idClasse);
+
+/* drop idClasse from Eleve to drop the classe table;*/
+alter table Eleve
+drop foreign key Classe_Eleve_fk,
+drop column idClasse;
+
+/*drop classe table because we put all his field in the Eleve_Ni_An table*/
+drop table Classe;
+
+alter table Eleve_Ni_An
+rename Classe;
+
+/*make the idClasse in Enseignant_Classe as foreign key from new Classe table*/
+alter table Enseignant_Classe 
+add constraint Classe_Enseignant_C_fk 
+foreign key(idClasse) references Classe(idClasse) on delete cascade on update cascade;
+
