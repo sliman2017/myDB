@@ -5,6 +5,7 @@ use GestionDeScolarite;
 create table if not exists Person(idPerson int primary key auto_increment, nom varchar(25) not null, 
                     prenom varchar(25) not null, adress varchar(25), dateDeNaissance date not null,
                     lieuDeNaissance varchar(25), email varchar(25), numPhone varchar(25), sex bool, longBlob photos);
+
 create table if not exists Directeur(idDirecteur int primary key, username varchar(25), uPassword varchar(25),
                        constraint Person_Directeur_fk foreign key(idDirecteur) references Person(idPerson)
                        on delete cascade on update cascade);
@@ -76,7 +77,7 @@ create table if not exists Matiere_Niveau(idMatiere int, idNiveau int, constrain
   and rename the Eleve_Ni_An to Classe;*/
 alter table Eleve_Ni_An
 add column classeNb smallint, 
-add salle varchar(25), 
+add salle smallint, 
 add nbEleve smallint, 
 add idEnseignantResponsable int, 
 add constraint Enseignant_Eleve_Ni_An_fk foreign key(idEnseignantResponsable) references Enseignant(idEnseignant) on delete cascade on update cascade;
@@ -104,3 +105,12 @@ alter table Enseignant_Classe
 add constraint Classe_Enseignant_C_fk 
 foreign key(idClasse) references Classe(idClasse) on delete cascade on update cascade;
 
+/* ajouter table association enter Matiere et Niveau*/
+create table Matiere_Niveau(idMatiere int, idNiveau int, constraint Matiere_Matiere_Niveau_fk foreign key(idMatiere) references Matiere(idMatiere) on delete cascade on update cascade, 
+constraint Niveau_Matiere_Niveau_fk foreign key(idNiveau) references Niveau(idNiveau) on delete cascade on update cascade);
+
+alter table Matiere
+modify column matiere varchar(30) not null unique;
+
+alter table Matiere_Niveau
+add unique(idMatiere, idNiveau);
