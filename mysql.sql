@@ -110,7 +110,14 @@ create table Matiere_Niveau(idMatiere int, idNiveau int, constraint Matiere_Mati
 constraint Niveau_Matiere_Niveau_fk foreign key(idNiveau) references Niveau(idNiveau) on delete cascade on update cascade);
 
 alter table Matiere
-modify column matiere varchar(30) not null unique;
+modify column matisere varchar(30) not null unique;
 
 alter table Matiere_Niveau
 add unique(idMatiere, idNiveau);
+
+alter table Evaluation
+add constraint foreign key(idEleve) references Eleve(idEleve) on delete cascade on update cascade,
+add constraint foreign key(idMatiere) references Matiere(idMatiere) on delete cascade on update cascade,
+add constraint foreign key(idTrimester) references Trimester(idTrimester) on delete cascade on update cascade,
+add constraint foreign key(idNiveau) references Niveau(idNiveau) on delete cascade on update cascade,
+add constraint foreign key(idAnnee) references Annee(idAnnee) on delete cascade on update cascade;

@@ -21,6 +21,9 @@
 -- when idClasse = 8 then 100
 -- else 100
 -- End;
-select idMatiere, matiere, fondamental, coefficient from Matiere where matiere = 'arab';
-select idNiveau from Matiere_Niveau as mn left join Matiere as m on m.idMatiere = mn.idMatiere
-where m.matiere = 'arab';
+alter table Evaluation
+add constraint foreign key(idEleve) references Eleve(idEleve) on delete cascade on update cascade,
+add constraint foreign key(idMatiere) references Matiere(idMatiere) on delete cascade on update cascade,
+add constraint foreign key(idTrimester) references Trimester(idTrimester) on delete cascade on update cascade,
+add constraint foreign key(idNiveau) references Niveau(idNiveau) on delete cascade on update cascade,
+add constraint foreign key(idAnnee) references Annee(idAnnee) on delete cascade on update cascade;
