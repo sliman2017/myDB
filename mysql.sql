@@ -61,11 +61,17 @@ create table if not exists Trimester(idTrimester int primary key auto_increment,
 create table if not exists Evaluation(idEleve int, idMatiere int, idTrimester int, idNiveau int, idAnnee int, participation DECIMAL(4,2), devoir1 DECIMAL(4,2), devoir2 DECIMAL(4,2), examen DECIMAL(4,2));
 create table if not exists Seance(idSeance int primary key auto_increment, seance varchar(40), heur Time, idMatiere int, constraint Matiere_Seance_fk foreign key(idMatiere)
                     references Matiere(idMatiere) on delete cascade on update cascade);
+alter table Seance
+add unique (seance, idMatiere);
 create table if not exists la_Date(idDate int primary key auto_increment, laDate date);
+alter table la_Date
+add unique(laDate);
 create table if not exists Absence_Eleve(idEleve int, idSeance int, idDate int, siJustifier bool, constraint Eleve_Abs_E_fk foreign key(idEleve)
                            references Eleve(idEleve) on delete cascade on update cascade, constraint Seance_Abs_E_fk foreign key(idSeance)
                            references Seance(idSeance) on delete cascade on update cascade, constraint la_Date_Abs_E_fk foreign key(idDate)
                            references la_Date(idDate) on delete cascade on update cascade);
+alter table Absence_Eleve
+add unique(idEleve, idSeance, idDate);
 create table if not exists Absence_Enseignant(idEnseignant int, idSeance int, idDate int, siJustifier bool, constraint Enseignant_Abs_E_fk foreign key(idEnseignant)
                            references Enseignant(idEnseignant) on delete cascade on update cascade, constraint Seance_Abs_En_fk foreign key(idSeance)
                            references Seance(idSeance) on delete cascade on update cascade, constraint la_Date_Abs_En_fk foreign key(idDate)
